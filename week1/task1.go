@@ -53,7 +53,8 @@ func main() {
 		"/": divide,
 	}
 
-	var result int
+	var number int
+	var err error
 
 	for _, r := range line {
 		//skip space symbol
@@ -61,9 +62,9 @@ func main() {
 			continue
 		}
 
-		number, err := strconv.Atoi(string(r))
+		number, err = strconv.Atoi(string(r))
 
-		//if current symbol is not an operand then its operation
+		//if current symbol is not an operand then it's operation
 		//perform this operation on the last two operands
 		if err != nil {
 			//pop 2 operands from the stack (indexes swaped)
@@ -73,14 +74,12 @@ func main() {
 			//execute operation
 			operation := string(r)
 			number = opExecutors[operation](operand1, operand2)
-
-			result = number
 		}
 
 		operands.push(number)
 	}
 
-	fmt.Println(result)
+	fmt.Println(number)
 }
 
 func sum(op1 int, op2 int) int {
